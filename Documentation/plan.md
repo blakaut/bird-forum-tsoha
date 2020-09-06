@@ -15,12 +15,18 @@ There will be a tool for searching or filtering messages.
 Following kinds of data will be neseccary to be stored in the database:
 
 * Users
+   
    User data has to include the username and a hash value of the password. It might also have other data, such as the creation time of the account.
 * Discussion boards
+
    Boards need names and maybe some sort of descriptions.
+
 * Threads
+
    Threads will need a topic, and maybe an included opening message. It will also need to be linked to a board.
+
 * Messages
+   
    Messages need the actual message data and they need to be linked to a thread.
 
 ## Possible additional functions
