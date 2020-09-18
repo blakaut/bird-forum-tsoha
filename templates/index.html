@@ -1,6 +1,25 @@
+<html>
+
+<head>
+<title>Welcome to the Bird forum!</title>
+</head>
+
+<body>
+
 <p>
-Testitekstin tulos: 
+Categories:
+{% for cat in categories %}
+
+<a href="http://www.google.com">{{cat[1]}}</a>
+
+{% endfor %}
+</p>
+<p>
+Messages:
 {% for message in messages%}
 message
 {% endfor %}
 </p>
+</body>
+
+</html>

@@ -5,7 +5,8 @@ CREATE TABLE users (
 );
 
 CREATE TABLE categories (
-    id SERIAL PRIMARY KEY
+    id SERIAL PRIMARY KEY,
+    name TEXT
 );
 
 CREATE TABLE threads (
