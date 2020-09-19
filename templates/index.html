@@ -5,21 +5,12 @@
 </head>
 
 <body>
-
-<p>
-Categories:
-{% for cat in categories %}
-
-<a href="http://www.google.com">{{cat[1]}}</a>
-
-{% endfor %}
-</p>
-<p>
-Messages:
-{% for message in messages%}
-message
-{% endfor %}
-</p>
+    <p>
+        Messages:
+            {% for cat in categories%}
+                <a href="/category/{{cat[1]}}">{{cat[1]}}</a>
+            {% endfor %}
+    </p>
 </body>
 
 </html>

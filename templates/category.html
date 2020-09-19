@@ -1,0 +1,31 @@
+<html>
+    <head>
+        <title>{{ catName }} - Bird forum</title>
+        
+    </head>
+    <body>
+        <p>
+            Categories:
+                {% for cat in categories%}
+                    <a href="/category/{{cat[1]}}">{{cat[1]}}</a>
+                {% endfor %}
+        </p>
+
+        <h2>Discussion category: {{catName}}</h2>
+        
+        {% if session.user_id %}
+            <p>Add new thread: </p>
+        {% else %}
+            <a href="/login">Login to partake in the discussion.</a>
+        {% endif %}
+        
+        <ul>
+            {% for t in threads %}
+            <li>
+                {{t[3]}}
+            </li>
+            {% endfor %}
+        </ul>
+        
+    </body>
+</html>
