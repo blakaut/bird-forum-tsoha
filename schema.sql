@@ -23,3 +23,8 @@ CREATE TABLE messages (
     user_id INTEGER REFERENCES users,
     sent_at TIMESTAMP
 );
+
+INSERT INTO categories (name) values ('Parrots');
+INSERT INTO categories (name) values ('Ioras');
+INSERT INTO categories (name) values ('Storks');
+INSERT INTO categories (name) values ('Shorebirds');
