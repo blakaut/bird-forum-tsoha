@@ -12,9 +12,10 @@ def index():
 @app.route("/category/<catName>")
 def category(catName):
     catList = categories.get_all()
+    catId = categories.getId_byName(catName)[0][0]
     thList = threads.get_byCat(catName)
     return render_template("category.html",
-    catName=catName, threads=thList, categories=catList)
+    catName=catName, catId=catId, threads=thList, categories=catList)
     
 @app.route("/logout")
 def logout():
@@ -71,3 +72,14 @@ def mpost(thId):
         content = request.form["message"]
         messages.add_new(content, thId, uId)
         return redirect("/")
+
+@app.route("/category/<catId>/tpost", methods=["get", "post"])
+def tpost(catId):
+    if request.method == "Get":
+        return redirect("/")
+    if request.method == "POST":
+        uId = users.check()
+        content = request.form["thread"]
+        threads.add_new(catId, uId, content)
+        catName = categories.getName_byId(catId)[0][0]
+        return redirect("/category/" + catName)
