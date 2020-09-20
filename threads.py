@@ -14,3 +14,8 @@ def get_byCat(catName):
     result = db.session.execute(sql)
     
     return result.fetchall()
+
+def get_byId(thId):
+    sql = "SELECT * FROM threads WHERE id='" + thId + "'"
+    result = db.session.execute(sql)
+    return result.fetchall()

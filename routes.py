@@ -1,21 +1,29 @@
 from app import app
 from flask import render_template, request, redirect
-import messages, categories, threads, users
+import categories, threads, users, messages 
 
 @app.route("/")
 def index():
     catList = categories.get_all()
-    mesList = messages.get_list()
+    #mList = messages.get_list()
     return render_template("index.html",
-    categories=catList, messages=mesList)
+    categories=catList)
 
 @app.route("/category/<catName>")
 def category(catName):
-    
     catList = categories.get_all()
     thList = threads.get_byCat(catName)
     return render_template("category.html",
     catName=catName, threads=thList, categories=catList)
+    
+@app.route("/logout")
+def logout():
+    catList = categories.get_all()
+    try:
+        users.logout()
+    except:
+        return redirect("/")
+    return render_template("index.html", message="Logged out.", categories=catList)
 
 @app.route("/login", methods=["get", "post"])
 def login():
@@ -41,3 +49,25 @@ def register():
             return redirect("/")
         else:
             return render_template("register.html",message="Registration failure")
+            
+@app.route("/thread/<thNum>")
+def thread(thNum):
+    catList = categories.get_all()
+    mList = messages.get_byThread(thNum)
+    print(mList)
+    th = threads.get_byId(thNum)[0]
+    return render_template("thread.html", messages=mList, categories=catList, thread=th)
+
+@app.route("/style/<stylesheet>")
+def style(stylesheet):
+    return render_template("styles/" + stylesheet)
+
+@app.route("/threads/<thId>/mpost", methods=["get", "post"])
+def mpost(thId):
+    if request.method == "GET":
+        return redirect("/")
+    if request.method == "POST":
+        uId = users.check()
+        content = request.form["message"]
+        messages.add_new(content, thId, uId)
+        return redirect("/")

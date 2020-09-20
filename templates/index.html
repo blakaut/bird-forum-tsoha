@@ -2,15 +2,25 @@
 
 <head>
 <title>Welcome to the Bird forum!</title>
+<link rel="import" href="top.html">
 </head>
 
 <body>
-    <p>
-        Messages:
+    <div class="topnav">
+        Categories:
             {% for cat in categories%}
                 <a href="/category/{{cat[1]}}">{{cat[1]}}</a>
             {% endfor %}
-    </p>
+        Profile options:
+            {% if session.user_id %}
+                <a href="/logout">Log out</a>
+            {% else %}
+                <a href="/login">Log in</a>
+                or
+                <a href="/register">register</a>
+            {% endif %}
+    </div>
+    <p>{{message}}</p>
 </body>
 
 </html>

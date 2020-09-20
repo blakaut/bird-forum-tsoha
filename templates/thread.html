@@ -1,0 +1,49 @@
+<html>
+
+<head>
+        <title>Thread {{thread[0]}} - Bird forum</title>
+        <link rel= "stylesheet" type= "text/css" href= "{{url_for('static',filename='styles/ss.css') }}">
+</head>
+
+<body>
+    <div class="topnav">
+        Categories:
+            {% for cat in categories%}
+                <a href="/category/{{cat[1]}}">{{cat[1]}}</a>
+            {% endfor %}
+        Profile options:
+            {% if session.user_id %}
+                <a href="/logout">Log out</a>
+            {% else %}
+                <a href="/login">Log in</a>
+                or
+                <a href="/register">register</a>
+            {% endif %}
+    </div>
+
+    <h3>Thread {{thread[0]}}</h3>
+
+    <p>{{thread[3]}}</p>
+    
+    
+    {% for m in messages %}
+        <div class="message">
+            {{m[1]}} says:<br>
+            {{m[0]}}
+        </div>
+    {% endfor %}
+    
+    <p/>
+
+    {% if session.user_id %}
+        <form action="/threads/{{thread[0]}}/mpost" method="post">
+        <p>Add your reply: <input type="text" name="message"></p>
+        <input type="submit" value="Post">
+        </form>
+    {% else %}
+        <a href="/login">Login</a> or
+        <a href="/register">register</a> to take part in the discussion.
+    {% endif %}
+        
+</body>
+</html>
