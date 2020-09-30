@@ -17,7 +17,7 @@ def getName_byId(catId):
     
 '''
 def get_one(catName):
-    sql = "SELECT * FROM categories WHERE name='" + catName + "'"
-    result = db.session.execute(sql)
+    sql = "SELECT * FROM categories WHERE name= :catName "
+    result = db.session.execute(sql, {})
     return result.fetchall()
 '''

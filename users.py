@@ -3,8 +3,8 @@ from flask import session
 from werkzeug.security import check_password_hash, generate_password_hash
 
 def login(uname, pword):
-    sql = "SELECT password, id FROM users WHERE username='" + uname + "'"
-    result = db.session.execute(sql, {"username":uname})
+    sql = "SELECT password, id FROM users WHERE username=:uname"
+    result = db.session.execute(sql, {"uname":uname})
     u = result.fetchone()
     if u == None:
         return False

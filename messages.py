@@ -10,8 +10,8 @@ def get_all():
     return result.fetchall()
 
 def get_byThread(thId):
-    sql = "SELECT messages.content, users.username FROM messages INNER JOIN users ON users.id=messages.user_id WHERE thread_id='" + str(thId)+ "'"
-    result = db.session.execute(sql)
+    sql = "SELECT messages.content, users.username FROM messages INNER JOIN users ON users.id=messages.user_id WHERE thread_id=:thId)"
+    result = db.session.execute(sql, {"thId":thId})
     return result.fetchall()
 
 def add_new(content, thId, uId):
