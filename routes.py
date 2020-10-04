@@ -136,5 +136,7 @@ def send_privatemessage(recipientId):
     if request.method == "POST":
         my_id = users.check_id()
         content = request.form["privatemessage"]
+        if content == "":
+            return redirect("/users/" + users.check_username(recipientId))
         privateMessages.send(my_id, recipientId, content)
         return redirect("/users/" + users.check_username(recipientId))
