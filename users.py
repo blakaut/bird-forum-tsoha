@@ -21,9 +21,7 @@ def logout():
 def register(uname, pword):
     phash = generate_password_hash(pword)
     try:
-        #print("uname:", uname, "pword:", pword, "phash:", phash)
         sql = "INSERT INTO users (username,password) VALUES (:uname, :pword)"
-        #print(sql)
         db.session.execute(sql, {"uname":uname,"pword":phash})
         db.session.commit()
     except:

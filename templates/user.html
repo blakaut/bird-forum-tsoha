@@ -19,17 +19,31 @@
 
         {% if user[0][0] != my_id %}
 
-        <form action="/users/sendprivatemessage" method="post">
+            {% if privateMessages != [] %}
+                My messages to {{user[0][1]}}:<br>
+                {% for pm in privateMessages %}
+                {{pm[1].strftime("%d.%m.%Y %H:%M")}} - <a href="/users/{{my_name}}">{{my_name}}</a>: {{ pm[0] }} <br>
+                {% endfor %}
+            {% endif %}
+
+        <form action="/users/{{user[0][0]}}/sendprivatemessage" method="post">
             <p>Send a private message: <input type="text" name="privatemessage"></p>
             <input type="submit" value="Post">
         </form>
 
         {% else %}
 
-        <form action="/users/addBio" method="post">
-            <p>Add Bio or remove by leaving empty (max 50 characters):<br><input type="text" name="bio"></p>
-            <input type="submit" value="Post">
-        </form>
+            <form action="/users/addBio" method="post">
+                <p>Add Bio or remove by leaving empty (max 50 characters):<br><input type="text" name="bio"></p>
+                <input type="submit" value="Post">
+            </form>
+
+            Private messages to me:<br>
+            {% if privateMessages != [] %}
+                {% for pm in privateMessages %}
+                    {{pm[2].strftime("%d.%m.%Y %H:%M")}} - <a href="/users/{{pm[0]}}">{{pm[0]}}</a>: {{pm[1]}}<br>
+                {% endfor %}
+            {% endif %}
 
         {% endif %}
 

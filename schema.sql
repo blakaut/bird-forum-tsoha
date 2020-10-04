@@ -15,7 +15,8 @@ CREATE TABLE threads (
     id SERIAL PRIMARY KEY,
     category_id INTEGER REFERENCES categories,
     user_id INTEGER REFERENCES users,
-    content TEXT
+    content TEXT,
+    sent_at TIMESTAMP
 );
 
 CREATE TABLE replies (
@@ -30,6 +31,8 @@ CREATE TABLE privateMessages (
     id SERIAL PRIMARY KEY,
     sender INTEGER REFERENCES users,
     recipient INTEGER REFERENCES users,
+    content TEXT,
+    sent_at TIMESTAMP,
     seen BOOLEAN
 );
 

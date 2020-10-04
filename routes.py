@@ -1,9 +1,6 @@
 from app import app
 from flask import render_template, request, redirect
-import categories
-import threads
-import users
-import replies
+import categories, threads, users, replies, privateMessages
 
 @app.route("/")
 def index():
@@ -107,10 +104,18 @@ def user_list():
 @app.route("/users/<username>")
 def one_user(username):
     my_id = users.check_id()
+    my_name = users.check_username(my_id)
     user = users.get_byName(username)
     if user == []:
         return render_template("index.html", message="Profile not found.", navbars=navbars())
-    return render_template("user.html", user=user, my_id=my_id, navbars=navbars())
+    print("my_id:",my_id,"user[0][0]:",user[0][0])
+    if username == my_name:
+        pm = privateMessages.get_sentToMe(my_id)
+    else:
+        pm = privateMessages.get_sentByMe(my_id, user[0][0])
+    print("pm:",pm)
+    return render_template("user.html", user=user, privateMessages=pm, my_id=my_id, my_name=my_name,
+                            navbars=navbars())
 
 @app.route("/users/addBio", methods=["get", "post"])
 def addBio():
@@ -124,8 +129,12 @@ def addBio():
         users.change_bio(my_id, bio)
         return redirect("/users/" + username)
 
-@app.route("/users/sendprivatemessage", methods=["get", "post"])
-def send_privatemessage():
+@app.route("/users/<recipientId>/sendprivatemessage", methods=["get", "post"])
+def send_privatemessage(recipientId):
     if request.method == "GET":
         return redirect("/users")
-    
+    if request.method == "POST":
+        my_id = users.check_id()
+        content = request.form["privatemessage"]
+        privateMessages.send(my_id, recipientId, content)
+        return redirect("/users/" + users.check_username(recipientId))

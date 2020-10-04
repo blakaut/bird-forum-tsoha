@@ -1,9 +1,4 @@
 from db import db
-#from sqlalchemy import DateTime
-#from sqlalchemy.sql import func
-#import datetime
-#import users
-
 
 def get_all():
     sql = "SELECT * FROM replies"
