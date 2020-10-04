@@ -1,0 +1,20 @@
+<html>
+<head>
+    <title>Users - Bird forum</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='styles/styles.css') }}">
+</head>
+<body>
+
+    <div>{{ navbars|safe }}</div>
+
+    <div class="main">
+        <h3>Bird forum users</h3>
+        <ul>
+            {% for username in userlist %}
+                <li>{{ username[0] }} [<a href="/users/{{username[0]}}">Profile</a>]</li>
+            {% endfor %}
+        </ul>
+    </div>
+
+</body>
+</html>

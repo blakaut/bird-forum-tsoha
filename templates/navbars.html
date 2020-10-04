@@ -1,6 +1,6 @@
 <html>
 
-<link rel="stylesheet" href="{{ url_for('static', filename='styles/styles.css') }}">
+<link rel="stylesheet" href="{{ url_for('static', filename='styles/navbarstyles.css') }}">
 
 {% block all %}
 <div class="sidebar">
@@ -15,13 +15,22 @@
 
 <div class="topbar">
     {% if username != "" %}
-    Logged in as {{username}} - Profile options:
-    <a href="/logout">Log out</a>
+    Logged in as {{username}} 
+
+    <div class="dropdown">
+        <button class="dropbtn">Options</button>
+        <div class="dropdown-content">
+            <a href="/users/{{username}}">Profile</a>
+            <a href="/logout">Log out</a>
+        </div>
+    </div>
+
     {% else %}
     <a href="/login">Log in</a>
     or
     <a href="/register">register</a>
     {% endif %}
+
 </div>
 {% endblock %}
 

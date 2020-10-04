@@ -1,0 +1,23 @@
+<html>
+
+<head>
+    <title>{{ user[0][0] }}'s profile - Bird forum</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='styles/styles.css') }}">
+</head>
+
+<body>
+
+    <div>{{ navbars|safe }}</div>
+
+    <div class="main">
+        <h3>Profile - {{ user[0][0] }}</h3>
+
+        {% if user[0][1] != None %}
+        <p>Bio: {{user[0][1]}}</p>
+        {% endif %}
+
+    </div>
+
+</body>
+
+</html>

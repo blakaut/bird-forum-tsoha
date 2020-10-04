@@ -10,6 +10,16 @@ import replies
 def index():
     return render_template("index.html", message="Welcome to Bird Forum!", navbars=navbars())
 
+@app.route("/navbars")
+def navbars():
+    print("taal")
+    catNameList = categories.get_names()
+    try:
+        user_id = users.check_id()
+        username = users.check_username(user_id)
+    except:
+        username = ""
+    return render_template("navbars.html", category_names=catNameList, username=username)
 
 @app.route("/category/<catName>")
 def category(catName):
@@ -36,7 +46,6 @@ def tpost(catId):
         catName = categories.getName_byId(catId)[0][0]
         return redirect("/category/" + catName)
 
-
 @app.route("/logout")
 def logout():
     try:
@@ -45,7 +54,6 @@ def logout():
         return redirect("/")
     return render_template("index.html", message="Logged out.", navbars=navbars())
 
-
 @app.route("/login", methods=["get", "post"])
 def login():
     if request.method == "GET":
@@ -53,11 +61,12 @@ def login():
     if request.method == "POST":
         uname = request.form["uname"]
         pword = request.form["pword"]
+        if uname == "" or pword == "":
+            return render_template("login.html", message="Fill both fields.", navbars=navbars())
         if users.login(uname, pword):
             return redirect("/")
         else:
-            return render_template("login.html", message="Login failed", navbars=navbars())
-
+            return render_template("login.html", message="Login failed.", navbars=navbars())
 
 @app.route("/register", methods=["get", "post"])
 def register():
@@ -71,8 +80,7 @@ def register():
         if users.register(uname, pword):
             return redirect("/")
         else:
-            return render_template("register.html", message="Registration failure", navbars=navbars())
-
+            return render_template("register.html", message="Registration failure.", navbars=navbars())
 
 @app.route("/thread/<thNum>")
 def thread(thNum):
@@ -92,14 +100,15 @@ def post_reply(thId):
         replies.add_new(content, thId, uId)
         return redirect(f"/thread/{thId}")
 
+@app.route("/users")
+def user_list():
+    userlist = users.getAllNames()
+    return render_template("users.html", userlist=userlist, navbars=navbars())
 
-@app.route("/navbars")
-def navbars():
-    print("taal")
-    catNameList = categories.get_names()
-    try:
-        user_id = users.check_id()
-        username = users.check_username(user_id)
-    except:
-        username = ""
-    return render_template("navbars.html", category_names=catNameList, username=username)
+@app.route("/users/<username>")
+def one_user(username):
+    user = users.get_byName(username)
+    print("user:",user)
+    if user == []:
+        return render_template("index.html", message="Profile not found.", navbars=navbars())
+    return render_template("user.html", user=user, navbars=navbars())

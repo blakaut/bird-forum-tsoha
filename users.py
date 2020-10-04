@@ -37,3 +37,13 @@ def check_username(user_id):
     sql = "SELECT username FROM users WHERE id=:user_id"
     result = db.session.execute(sql, {"user_id":user_id})
     return result.fetchall()[0][0]
+
+def getAllNames():
+    sql = "SELECT username FROM users"
+    result = db.session.execute(sql)
+    return result.fetchall()
+
+def get_byName(username):
+    sql = "SELECT username, description FROM users WHERE username=:username"
+    result = db.session.execute(sql, {"username":username})
+    return result.fetchall()

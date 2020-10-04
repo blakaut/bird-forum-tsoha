@@ -1,7 +1,9 @@
 CREATE TABLE users (
     id SERIAL PRIMARY KEY,
     username TEXT UNIQUE,
-    password TEXT
+    password TEXT,
+    description VARCHAR(50),
+    authority SMALLINT
 );
 
 CREATE TABLE categories (
@@ -22,6 +24,13 @@ CREATE TABLE replies (
     thread_id INTEGER REFERENCES threads,
     user_id INTEGER REFERENCES users,
     sent_at TIMESTAMP
+);
+
+CREATE TABLE privateMessages (
+    id SERIAL PRIMARY KEY,
+    sender INTEGER REFERENCES users,
+    recipient INTEGER REFERENCES users,
+    seen BOOLEAN
 );
 
 INSERT INTO categories (name) values ('Parrots');
