@@ -16,7 +16,7 @@ CREATE TABLE threads (
     content TEXT
 );
 
-CREATE TABLE messages (
+CREATE TABLE replies (
     id SERIAL PRIMARY KEY,
     content TEXT,
     thread_id INTEGER REFERENCES threads,

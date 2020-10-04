@@ -30,5 +30,10 @@ def register(uname, pword):
         return False
     return login(uname,pword)
 
-def check():
+def check_id():
     return session["user_id"]
+
+def check_username(user_id):
+    sql = "SELECT username FROM users WHERE id=:user_id"
+    result = db.session.execute(sql, {"user_id":user_id})
+    return result.fetchall()[0][0]

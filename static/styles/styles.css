@@ -1,0 +1,72 @@
+body {
+  margin: 0px;
+}
+
+.topbar {
+  width: 100%;
+  overflow: hidden;
+  background-color: rgb(200, 237, 255);
+  padding: 8px 8px 8px 200px;
+}
+
+.topbar b {
+  text-align: center;
+  font-size: 17px;
+  padding: 14px 16px;
+}
+
+.sidebar {
+  height: 100%;
+  width: 160px;
+  position: fixed;
+  z-index: 1;
+  top: 0;
+  left: 0;
+  right: 0;
+  background-color: rgb(212, 255, 214);
+  overflow-x: hidden;
+  padding-top: 20px;
+}
+
+.sidebar b {
+  padding: 8px 8px 2px 16px;
+  text-decoration: overline;
+  font-size: 22px;
+  color: #360000;
+  display: block;
+}
+
+.sidebar a {
+  padding: 2px 8px 2px 16px;
+  text-decoration: none;
+  font-size: 22px;
+  color: #2196F3;
+  display: block;
+}
+
+.main {
+  margin-left: 200px;
+  font-size: 18px;
+}
+
+.reply-even {
+  /* width: 150px; */
+  float: left;
+  width: 100%;
+  /* top: 20px; */
+  left: 150px;
+  background: rgb(255, 202, 224);
+  /* overflow-x: hidden; */
+  padding: 8px 8px;
+}
+
+.reply-odd {
+  /* width: 150px; */
+  float: left;
+  width: 100%;
+  /* top: 20px; */
+  left: 150px;
+  background: rgb(255, 185, 191);
+  /* overflow-x: hidden; */
+  padding: 8px 8px;
+}

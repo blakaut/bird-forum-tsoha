@@ -1,14 +1,24 @@
 <html>
-    <head>
-        <title>Login - Bird forum</title>
-    </head>
-    <body>
-    <form action="/login" method="post">
-        <h3>Log in</h3>
-        <p>Username: <input type="text" name="uname"></p>
-        <p>Password: <input type="text" name="pword"></p>
-        <input type="submit" value="Log in">
-        {{message}}
-    </form>
-    </body>
+
+<head>
+    <title>Login - Bird forum</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='styles/styles.css') }}">
+</head>
+
+<body>
+    
+    <div>{{ navbars|safe }}</div>
+
+    <div class="main">
+        <form action="/login" method="post">
+            <h3>Log in</h3>
+            <p>Username: <input type="text" name="uname"></p>
+            <p>Password: <input type="password" name="pword"></p>
+            <input type="submit" value="Log in">
+            {{message}}
+        </form>
+    </div>
+
+</body>
+
 </html>

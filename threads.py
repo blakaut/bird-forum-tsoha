@@ -6,10 +6,10 @@ def get_all():
     return result.fetchall()
     
 def get_byCat(catName):
+
     sql = "SELECT id FROM categories WHERE name=:catName"
     catId_rp = db.session.execute(sql, {"catName":catName})
     catId = catId_rp.fetchall()[0][0]
-    
     sql = "SELECT * FROM threads WHERE category_id=:catId"
     result = db.session.execute(sql, {"catId":catId})
     

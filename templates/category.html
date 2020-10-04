@@ -1,36 +1,28 @@
 <html>
-    <head>
-        <title>{{ catName }} - Bird forum</title>
-        
-    </head>
-    <body>
-        <div class="topnav">
-            Categories:
-                {% for cat in categories%}
-                    <a href="/category/{{cat[1]}}">{{cat[1]}}</a>
-                {% endfor %}
-            Profile options:
-                {% if session.user_id %}
-                    <a href="/logout">Log out</a>
-                {% else %}
-                    <a href="/login">Log in</a>
-                    or
-                    <a href="/register">register</a>
-                {% endif %}
-        </div>
 
+<head>
+    <title>{{ catName }} - Bird forum</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='styles/styles.css') }}">
+    <script src="{{ url_for('static', filename='scripts/navbars.js') }}"></script>
+</head>
+
+<body>
+
+    <div>{{ navbars|safe }}</div>
+
+    <div class="main">
         <h2>Discussion category: {{catName}}</h2>
-        
+
         {% if session.user_id %}
-            <form action="/category/{{catId}}/tpost" method="post">
+        <form action="/category/{{catId}}/post_thread" method="post">
             <p>Add new thread: <input type="text" name="thread"></p>
             <input type="submit" value="Post">
-            </form>
+        </form>
         {% else %}
-            <a href="/login">Login</a> or
-            <a href="/register">register</a> to take part in the discussion.
+        <a href="/login">Login</a> or
+        <a href="/register">register</a> to take part in the discussion.
         {% endif %}
-        
+
         <ul>
             {% for t in threads %}
             <li>
@@ -38,6 +30,8 @@
             </li>
             {% endfor %}
         </ul>
-        
-    </body>
+    </div>
+
+</body>
+
 </html>

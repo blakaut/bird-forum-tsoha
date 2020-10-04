@@ -1,49 +1,44 @@
 <html>
 
 <head>
-        <title>Thread {{thread[0]}} - Bird forum</title>
-        <link rel= "stylesheet" type= "text/css" href= "{{url_for('static',filename='styles/ss.css') }}">
+    <title>Thread {{thread[0]}} - Bird forum</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='styles/styles.css') }}">
 </head>
 
 <body>
-    <div class="topnav">
-        Categories:
-            {% for cat in categories%}
-                <a href="/category/{{cat[1]}}">{{cat[1]}}</a>
+
+    <div>{{ navbars|safe }}</div>
+
+    <div class="main">
+        <h3>Thread: {{thread[3]}}</h3>
+
+        {% for m in replies %}
+        {% if loop.index % 2 == 0 %}
+        <div class="reply-even">
+            {%else%}
+            <div class="reply-odd">
+                {% endif %}
+                <p>
+                    {{m[2].strftime("%d.%m.%Y %H:%M")}}<br>
+                    {{m[0]}}:<br>
+                    {{m[1]}}
+                </p>
+            </div>
             {% endfor %}
-        Profile options:
+
+            <p />
+
             {% if session.user_id %}
-                <a href="/logout">Log out</a>
+            <form action="/threads/{{thread[0]}}/post_reply" method="post">
+                <p>Add your reply: <input type="text" name="reply"></p>
+                <input type="submit" value="Post">
+            </form>
             {% else %}
-                <a href="/login">Log in</a>
-                or
-                <a href="/register">register</a>
+            <a href="/login">Login</a> or
+            <a href="/register">register</a> to take part in the discussion.
             {% endif %}
-    </div>
-
-    <h3>Thread {{thread[0]}}</h3>
-
-    <p>{{thread[3]}}</p>
-    
-    
-    {% for m in messages %}
-        <div class="message">
-            {{m[1]}} says:<br>
-            {{m[0]}}
         </div>
-    {% endfor %}
-    
-    <p/>
 
-    {% if session.user_id %}
-        <form action="/threads/{{thread[0]}}/mpost" method="post">
-        <p>Add your reply: <input type="text" name="message"></p>
-        <input type="submit" value="Post">
-        </form>
-    {% else %}
-        <a href="/login">Login</a> or
-        <a href="/register">register</a> to take part in the discussion.
-    {% endif %}
-        
 </body>
+
 </html>
