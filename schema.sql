@@ -2,7 +2,7 @@ CREATE TABLE users (
     id SERIAL PRIMARY KEY,
     username TEXT UNIQUE,
     password TEXT,
-    description VARCHAR(50),
+    bio VARCHAR(50),
     authority SMALLINT
 );
 

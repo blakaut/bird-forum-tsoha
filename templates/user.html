@@ -1,7 +1,7 @@
 <html>
 
 <head>
-    <title>{{ user[0][0] }}'s profile - Bird forum</title>
+    <title>{{ user[0][1] }}'s profile - Bird forum</title>
     <link rel="stylesheet" href="{{ url_for('static', filename='styles/styles.css') }}">
 </head>
 
@@ -10,10 +10,27 @@
     <div>{{ navbars|safe }}</div>
 
     <div class="main">
-        <h3>Profile - {{ user[0][0] }}</h3>
+        <h3>Profile - {{ user[0][1] }}</h3>
 
-        {% if user[0][1] != None %}
-        <p>Bio: {{user[0][1]}}</p>
+        {% if user[0][2] == None or user[0][2] == "" %}
+        {% else %}
+        <p>Bio: {{user[0][2]}}</p>
+        {% endif %}
+
+        {% if user[0][0] != my_id %}
+
+        <form action="/users/sendprivatemessage" method="post">
+            <p>Send a private message: <input type="text" name="privatemessage"></p>
+            <input type="submit" value="Post">
+        </form>
+
+        {% else %}
+
+        <form action="/users/addBio" method="post">
+            <p>Add Bio or remove by leaving empty (max 50 characters):<br><input type="text" name="bio"></p>
+            <input type="submit" value="Post">
+        </form>
+
         {% endif %}
 
     </div>

@@ -5,7 +5,6 @@ import threads
 import users
 import replies
 
-
 @app.route("/")
 def index():
     return render_template("index.html", message="Welcome to Bird Forum!", navbars=navbars())
@@ -38,12 +37,12 @@ def tpost(catId):
     if request.method == "Get":
         return redirect("/")
     if request.method == "POST":
-        userId = users.check_id()
+        catName = categories.getName_byId(catId)[0][0]
         content = request.form["thread"]
         if content == "":
             return redirect("/category/" + catName)
+        userId = users.check_id()
         threads.add_new(catId, userId, content)
-        catName = categories.getName_byId(catId)[0][0]
         return redirect("/category/" + catName)
 
 @app.route("/logout")
@@ -107,8 +106,26 @@ def user_list():
 
 @app.route("/users/<username>")
 def one_user(username):
+    my_id = users.check_id()
     user = users.get_byName(username)
-    print("user:",user)
     if user == []:
         return render_template("index.html", message="Profile not found.", navbars=navbars())
-    return render_template("user.html", user=user, navbars=navbars())
+    return render_template("user.html", user=user, my_id=my_id, navbars=navbars())
+
+@app.route("/users/addBio", methods=["get", "post"])
+def addBio():
+    bio = request.form["bio"]
+    my_id = users.check_id()
+    username = users.check_username(my_id)
+    if request.method == "GET":
+        return redirect("/users/" + username)
+    if request.method == "POST":
+        print("changing bio...")
+        users.change_bio(my_id, bio)
+        return redirect("/users/" + username)
+
+@app.route("/users/sendprivatemessage", methods=["get", "post"])
+def send_privatemessage():
+    if request.method == "GET":
+        return redirect("/users")
+    

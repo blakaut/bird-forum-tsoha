@@ -14,13 +14,15 @@
 </div>
 
 <div class="topbar">
+    
     {% if username != "" %}
     Logged in as {{username}} 
 
     <div class="dropdown">
         <button class="dropbtn">Options</button>
         <div class="dropdown-content">
-            <a href="/users/{{username}}">Profile</a>
+            <a href="/users/{{username}}">My profile</a>
+            <a href="/users">Users</a>
             <a href="/logout">Log out</a>
         </div>
     </div>
@@ -30,7 +32,7 @@
     or
     <a href="/register">register</a>
     {% endif %}
-
+    
 </div>
 {% endblock %}
 

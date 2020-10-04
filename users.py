@@ -44,6 +44,13 @@ def getAllNames():
     return result.fetchall()
 
 def get_byName(username):
-    sql = "SELECT username, description FROM users WHERE username=:username"
+    sql = "SELECT id, username, bio FROM users WHERE username=:username"
     result = db.session.execute(sql, {"username":username})
     return result.fetchall()
+
+def change_bio(my_id, bio):
+    print("bio:",bio,"my_id:",my_id)
+    sql = "UPDATE users SET bio=:bio WHERE id=:my_id"
+    db.session.execute(sql, {"bio":bio, "my_id":my_id})
+    db.session.commit()
+    return
