@@ -20,7 +20,7 @@ def logout():
     
 def register(uname, pword):
     phash = generate_password_hash(pword)
-    if get_byName(uname) != 0:
+    if get_byName(uname) != None:
         print(get_byName(uname))
         return False
     else:
