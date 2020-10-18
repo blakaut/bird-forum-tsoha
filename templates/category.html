@@ -25,9 +25,21 @@
 
         <ul>
             {% for t in threads %}
-            <li>
-                {{t[3]}} <a href="/thread/{{t[0]}}">[Open]</a>
-            </li>
+                {% if loop.index % 2 == 0 %}
+                <div class="reply-even">
+                {%else%}
+                <div class="reply-odd">
+                {% endif %}
+            
+                {% if t[4] != None %}
+                {{t[4].strftime("%d.%m.%Y %H:%M")}}<br>
+                {% endif %}
+                {{t[2]}}:<br>
+                {{t[3]}}<br>
+                 <a href="/thread/{{t[0]}}">[Read replies]</a>
+
+                </div>
+            
             {% endfor %}
         </ul>
     </div>

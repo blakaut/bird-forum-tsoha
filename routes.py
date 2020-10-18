@@ -121,9 +121,9 @@ def register():
 #The page for a single thread.
 @app.route("/thread/<thNum>")
 def thread(thNum):
-    mList = replies.get_byThread(thNum)
+    messageList = replies.get_byThread(thNum)
     thread = threads.get_byId(thNum)
-    return render_template("thread.html", replies=mList, thread=thread, navbars=navbars())
+    return render_template("thread.html", replies=messageList, thread=thread, navbars=navbars())
 
 #Posting a new thread.
 @app.route("/threads/<thId>/post_reply", methods=["get", "post"])
