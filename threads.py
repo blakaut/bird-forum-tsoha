@@ -11,7 +11,7 @@ def get_byCat(catName):
     catId_rp = db.session.execute(sql, {"catName":catName})
     catId = catId_rp.fetchone()[0]
     sql = "SELECT threads.id, threads.category_id, users.username, threads.content, threads.sent_at FROM threads, users " \
-    "WHERE threads.category_id=:catId"
+    "WHERE threads.category_id=:catId AND users.id = threads.user_id"
     result = db.session.execute(sql, {"catId":catId})
     return result.fetchall()
 
