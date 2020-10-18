@@ -1,4 +1,4 @@
-##How did it go
+# How did it go
 
 Even though the project progressed well until the third submission, the last submission proved to be more difficult than I hoped it to be. I had limited time to work with the project and my Visual Studio Code started causing serious freezes in my system, which made working harder -- just when this kind of a thing wasn't welcome.
 
