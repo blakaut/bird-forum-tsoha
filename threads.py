@@ -26,3 +26,9 @@ def add_new(catId, uId, content):
     ex = db.session.execute(sql, {"catId":catId, "uId":uId, "content":content})
     db.session.commit()
     return ex.fetchone()[0]
+
+def search(searchterm):
+    sql = "SELECT id, category_id, user_id, content, sent_at, COUNT(*) " + \
+    "FROM threads WHERE content LIKE :searchterm GROUP BY id"
+    result = db.session.execute(sql, {"searchterm": searchterm})
+    return result.fetchall()

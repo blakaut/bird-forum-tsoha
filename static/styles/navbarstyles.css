@@ -22,10 +22,13 @@
     padding-top: 20px;
 }
 
+.sidebar hr{
+    width:80%
+}
+
 .sidebar b {
     font-family: sans-serif;
-    padding: 8px 8px 2px 16px;
-    text-decoration: overline;
+    padding: 2px 8px 2px 16px;
     font-size: 22px;
     color: #360000;
     display: block;

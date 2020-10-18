@@ -13,11 +13,11 @@
         <h3>Thread: {{thread[3]}}</h3>
 
         {% for m in replies %}
-        {% if loop.index % 2 == 0 %}
-        <div class="reply-even">
+            {% if loop.index % 2 == 0 %}
+            <div class="reply-even">
             {%else%}
             <div class="reply-odd">
-                {% endif %}
+            {% endif %}
                 <p>
                     {{m[2].strftime("%d.%m.%Y %H:%M")}}<br>
                     {{m[0]}}:<br>

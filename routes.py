@@ -86,17 +86,37 @@ def register():
         pword = request.form["pword"]
         whitespaceFinder = re.compile(r'\s+')
         if len(pword) < 5:
-            return render_template("register.html", message="Please offer a password that is at least five (5) characters long.", navbars=navbars())
+            return render_template(
+                "register.html",
+                message="Please offer a password that is at least five (5) characters long.",
+                navbars=navbars()
+                )
         if whitespaceFinder.findall(uname) != []:
-            return render_template("register.html", message="No space or other whitespace is permitted in the username.", navbars=navbars())
+            return render_template(
+                "register.html",
+                message="No space or other whitespace is permitted in the username.",
+                navbars=navbars()
+                )
         if whitespaceFinder.findall(pword) != []:
-            return render_template("register.html", message="No space or other whitespace is permitted in the password.", navbars=navbars())
+            return render_template(
+                "register.html",
+                message="No space or other whitespace is permitted in the password.",
+                navbars=navbars()
+                )
         if uname == "" or pword == "":
-            return render_template("register.html", message="Fill both fields.", navbars=navbars())
+            return render_template(
+                "register.html",
+                message="Fill both fields.",
+                navbars=navbars()
+                )
         if users.register(uname, pword):
             return redirect("/")
         else:
-            return render_template("register.html", message="Registration failure: The given username is taken.", navbars=navbars())
+            return render_template(
+                "register.html",
+                message="Registration failure: The given username is taken.",
+                navbars=navbars()
+                )
 
 #The page for a single thread.
 @app.route("/thread/<thNum>")
@@ -164,3 +184,17 @@ def send_privatemessage(recipientId):
             return redirect("/users/" + users.check_username(recipientId))
         privateMessages.send(my_id, recipientId, content)
         return redirect("/users/" + users.check_username(recipientId))
+
+#The page for searching for threads and messages
+@app.route("/search", methods=["get", "post"])
+def searchPage():
+    if request.method == "GET":
+        return render_template("search.html", navbars=navbars())
+    if request.method == "POST":
+        searchterm = request.form["searchterm"]
+        if request.form["searchCategory"] == "threads":
+            foundThreads = threads.search(searchterm)
+            return render_template("search.html", navbars=navbars(), result=foundThreads, type="thread")
+        else:
+            foundReplies = replies.search(searchterm)
+            return render_template("search.html", navbars=navbars(), result=foundReplies, type="reply")

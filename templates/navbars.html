@@ -7,10 +7,13 @@
     <a href="/">
         <img src="{{ url_for('static', filename='images/forumlogo.png') }}" alt="Bird forum">
     </a>
+    <hr>
     <b>Categories:</b>
     {% for cat in category_names%}
     <a href="/category/{{cat[0]}}">{{cat[0]}}</a>
     {% endfor %}
+    <hr>
+    <a href="/search">Search</a>
 </div>
 
 <div class="topbar">

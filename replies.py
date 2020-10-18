@@ -18,3 +18,9 @@ def add_new(content, thId, uId):
     db.session.execute(sql, {"content": content, "thId": thId, "uId": uId})
     db.session.commit()
     return True
+
+def search(searchterm):
+    sql = "SELECT id, content, thread_id, user_id, sent_at, COUNT(*) " + \
+    "FROM replies WHERE content LIKE :searchterm GROUP BY id"
+    result = db.session.execute(sql, {"searchterm": searchterm})
+    return result.fetchall()

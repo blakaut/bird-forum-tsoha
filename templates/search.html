@@ -1,0 +1,53 @@
+<html>
+
+<head>
+    <title>Users - Bird forum</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='styles/styles.css') }}">
+</head>
+
+<body>
+
+    <div>{{ navbars|safe }}</div>
+
+    <div class="main">
+        <h3>Search for threads or replies</h3>
+        <form action="/search" method="post">
+            <p>Search terms: <input type="text" name="searchterm"></p>
+            <p>
+                <input type="radio" id="threads" name="searchCategory" value="threads" checked>
+                <label for="threads">Threads</label>
+                <input type="radio" id="replies" name="searchCategory" value="replies">
+                <label for="replies">Replies</label><br>
+            </p>
+            <p><input type="submit" value="Search!"></p>
+        </form>
+
+        
+            {% if type == "thread" %}
+                {% for r in result %}
+                    {% if loop.index % 2 == 0 %}
+                    <div class="reply-even">
+                    {%else%}
+                    <div class="reply-odd">
+                    {% endif %}
+                    <a href="/thread/{{r[0]}}">{{r[3]}}</a>
+                    </div>
+                {% endfor %}
+            {% else %}
+                {% for r in result %}
+                    {% if loop.index % 2 == 0 %}
+                    <div class="reply-even">
+                    {%else%}
+                    <div class="reply-odd">
+                    {% endif %}
+                    <a href="/thread/{{r[2]}}">{{r[1]}}</a>
+                    </div>
+                {% endfor %}
+            {% endif %}
+        
+
+    </div>
+
+</body>
+
+</html>
