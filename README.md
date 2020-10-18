@@ -8,4 +8,6 @@ Submission 1: [Planning for the project](https://github.com/blakaut/bird-forum-t
 
 Submission 2: [Building the basics](https://github.com/blakaut/bird-forum-tsoha/blob/master/Documentation/submission2.md)
 
+Submission 3: [Somewhat working](https://github.com/blakaut/bird-forum-tsoha/blob/master/Documentation/submission3.md)
+
 [Heroku link](https://bird-forum-tsoha.herokuapp.com/)
