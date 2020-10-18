@@ -1,7 +1,7 @@
 <html>
 
 <head>
-    <title>{{ user[0][1] }}'s profile - Bird forum</title>
+    <title>{{ user[1] }}'s profile - Bird forum</title>
     <link rel="stylesheet" href="{{ url_for('static', filename='styles/styles.css') }}">
 </head>
 
@@ -10,23 +10,23 @@
     <div>{{ navbars|safe }}</div>
 
     <div class="main">
-        <h3>Profile - {{ user[0][1] }}</h3>
+        <h3>Profile - {{ user[1] }}</h3>
 
-        {% if user[0][2] == None or user[0][2] == "" %}
+        {% if user[2] == None or user[2] == "" %}
         {% else %}
-        <p>Bio: {{user[0][2]}}</p>
+        <p>Bio: {{user[2]}}</p>
         {% endif %}
 
-        {% if user[0][0] != my_id %}
+        {% if user[0] != my_id %}
 
             {% if privateMessages != [] %}
-                My messages to {{user[0][1]}}:<br>
+                My messages to {{user[1]}}:<br>
                 {% for pm in privateMessages %}
                 {{pm[1].strftime("%d.%m.%Y %H:%M")}} - <a href="/users/{{my_name}}">{{my_name}}</a>: {{ pm[0] }} <br>
                 {% endfor %}
             {% endif %}
 
-        <form action="/users/{{user[0][0]}}/sendprivatemessage" method="post">
+        <form action="/users/{{user[0]}}/sendprivatemessage" method="post">
             <p>Send a private message: <input type="text" name="privatemessage"></p>
             <input type="submit" value="Post">
         </form>

@@ -1,10 +1,9 @@
 from db import db
 
 def get_all():
-    sql = "SELECT * FROM replies"
+    sql = "SELECT id, content, thread_id, user_id, sent_at FROM replies"
     result = db.session.execute(sql)
     return result.fetchall()
-
 
 def get_byThread(thId):
     sql = "SELECT users.username, replies.content, replies.sent_at FROM replies " + \

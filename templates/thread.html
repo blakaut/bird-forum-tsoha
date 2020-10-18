@@ -30,7 +30,7 @@
 
             {% if session.user_id %}
             <form action="/threads/{{thread[0]}}/post_reply" method="post">
-                <p>Add your reply: <input type="text" name="reply"></p>
+                <p>Add your reply: <textarea name="reply" rows="3" cols="45" placeholder="Your reply here."></textarea></p>
                 <input type="submit" value="Post">
             </form>
             {% else %}

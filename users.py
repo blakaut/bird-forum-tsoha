@@ -34,7 +34,7 @@ def check_id():
 def check_username(user_id):
     sql = "SELECT username FROM users WHERE id=:user_id"
     result = db.session.execute(sql, {"user_id":user_id})
-    return result.fetchall()[0][0]
+    return result.fetchone()[0]
 
 def getAllNames():
     sql = "SELECT username FROM users"
@@ -44,7 +44,7 @@ def getAllNames():
 def get_byName(username):
     sql = "SELECT id, username, bio FROM users WHERE username=:username"
     result = db.session.execute(sql, {"username":username})
-    return result.fetchall()
+    return result.fetchone()
 
 def change_bio(my_id, bio):
     print("bio:",bio,"my_id:",my_id)

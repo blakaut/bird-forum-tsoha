@@ -8,7 +8,6 @@ def index():
 
 @app.route("/navbars")
 def navbars():
-    print("taal")
     catNameList = categories.get_names()
     try:
         user_id = users.check_id()
@@ -19,7 +18,6 @@ def navbars():
 
 @app.route("/category/<catName>")
 def category(catName):
-    print("TESTI:", catName)
     catId = categories.getId_byName(catName)
     thList = threads.get_byCat(catName)
     return render_template("category.html",
@@ -29,18 +27,18 @@ def category(catName):
                            navbars=navbars()
                            )
 
-@app.route("/category/<catId>/post_thread", methods=["get", "post"])
-def tpost(catId):
+@app.route("/category/<category_Id>/post_thread", methods=["get", "post"])
+def tpost(category_Id):
     if request.method == "Get":
         return redirect("/")
     if request.method == "POST":
-        catName = categories.getName_byId(catId)[0][0]
+        catName = categories.getName_byId(category_Id)[0]
         content = request.form["thread"]
         if content == "":
             return redirect("/category/" + catName)
         userId = users.check_id()
-        threads.add_new(catId, userId, content)
-        return redirect("/category/" + catName)
+        threadId = threads.add_new(category_Id, userId, content)
+        return redirect(f"/thread/{threadId}")
 
 @app.route("/logout")
 def logout():
@@ -81,8 +79,8 @@ def register():
 @app.route("/thread/<thNum>")
 def thread(thNum):
     mList = replies.get_byThread(thNum)
-    th = threads.get_byId(thNum)[0]
-    return render_template("thread.html", replies=mList, thread=th, navbars=navbars())
+    thread = threads.get_byId(thNum)
+    return render_template("thread.html", replies=mList, thread=thread, navbars=navbars())
 
 @app.route("/threads/<thId>/post_reply", methods=["get", "post"])
 def post_reply(thId):
@@ -108,11 +106,11 @@ def one_user(username):
     user = users.get_byName(username)
     if user == []:
         return render_template("index.html", message="Profile not found.", navbars=navbars())
-    print("my_id:",my_id,"user[0][0]:",user[0][0])
+    print("my_id:",my_id,"user[0]:",user[0], "user:", user)
     if username == my_name:
         pm = privateMessages.get_sentToMe(my_id)
     else:
-        pm = privateMessages.get_sentByMe(my_id, user[0][0])
+        pm = privateMessages.get_sentByMe(my_id, user[0])
     print("pm:",pm)
     return render_template("user.html", user=user, privateMessages=pm, my_id=my_id, my_name=my_name,
                             navbars=navbars())

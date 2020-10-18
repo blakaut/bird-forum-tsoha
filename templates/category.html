@@ -15,7 +15,7 @@
 
         {% if session.user_id %}
         <form action="/category/{{catId}}/post_thread" method="post">
-            <p>Add new thread: <input type="text" name="thread"></p>
+            <p>Add new thread: <textarea name="thread" rows="3" cols="45" placeholder="Your opening message here."></textarea></p>
             <input type="submit" value="Post">
         </form>
         {% else %}
