@@ -10,4 +10,6 @@ Submission 2: [Building the basics](https://github.com/blakaut/bird-forum-tsoha/
 
 Submission 3: [Somewhat working](https://github.com/blakaut/bird-forum-tsoha/blob/master/Documentation/submission3.md)
 
+Final submission: [Placeholder](https://github.com/blakaut/bird-forum-tsoha/blob/master/Documentation/final.md)
+
 [Heroku link](https://bird-forum-tsoha.herokuapp.com/)
