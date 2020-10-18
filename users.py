@@ -20,6 +20,11 @@ def logout():
     
 def register(uname, pword):
     phash = generate_password_hash(pword)
+    if get_byName(uname) != 0:
+        print(get_byName(uname))
+        return False
+    else:
+        print(get_byName(uname))
     try:
         sql = "INSERT INTO users (username,password) VALUES (:uname, :pword)"
         db.session.execute(sql, {"uname":uname,"pword":phash})

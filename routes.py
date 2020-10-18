@@ -1,11 +1,14 @@
 from app import app
 from flask import render_template, request, redirect
+import re
 import categories, threads, users, replies, privateMessages
 
+#The front page
 @app.route("/")
 def index():
     return render_template("index.html", message="Welcome to Bird Forum!", navbars=navbars())
 
+#Navigation bars, that will be visible on all pages
 @app.route("/navbars")
 def navbars():
     catNameList = categories.get_names()
@@ -16,6 +19,16 @@ def navbars():
         username = ""
     return render_template("navbars.html", category_names=catNameList, username=username)
 
+# Error handlers for 500 and 404
+@app.errorhandler(500)
+def page_not_found(error):
+    return render_template("index.html", message="Internal server error. Sorry for your bad luck!", navbars=navbars())
+
+@app.errorhandler(404)
+def page_not_found(error):
+    return render_template("index.html", message="Error: The given page doesn't exist!", navbars=navbars())
+
+#Page for a single category. Will show the threads under the category.
 @app.route("/category/<catName>")
 def category(catName):
     catId = categories.getId_byName(catName)
@@ -27,6 +40,7 @@ def category(catName):
                            navbars=navbars()
                            )
 
+#Posting a new thread
 @app.route("/category/<category_Id>/post_thread", methods=["get", "post"])
 def tpost(category_Id):
     if request.method == "Get":
@@ -62,6 +76,7 @@ def login():
         else:
             return render_template("login.html", message="Login failed.", navbars=navbars())
 
+#Registering a new user account. Includes all the error messages deemed possible for the function.
 @app.route("/register", methods=["get", "post"])
 def register():
     if request.method == "GET":
@@ -69,19 +84,28 @@ def register():
     if request.method == "POST":
         uname = request.form["uname"]
         pword = request.form["pword"]
+        whitespaceFinder = re.compile(r'\s+')
+        if len(pword) < 5:
+            return render_template("register.html", message="Please offer a password that is at least five (5) characters long.", navbars=navbars())
+        if whitespaceFinder.findall(uname) != []:
+            return render_template("register.html", message="No space or other whitespace is permitted in the username.", navbars=navbars())
+        if whitespaceFinder.findall(pword) != []:
+            return render_template("register.html", message="No space or other whitespace is permitted in the password.", navbars=navbars())
         if uname == "" or pword == "":
             return render_template("register.html", message="Fill both fields.", navbars=navbars())
         if users.register(uname, pword):
             return redirect("/")
         else:
-            return render_template("register.html", message="Registration failure.", navbars=navbars())
+            return render_template("register.html", message="Registration failure: The given username is taken.", navbars=navbars())
 
+#The page for a single thread.
 @app.route("/thread/<thNum>")
 def thread(thNum):
     mList = replies.get_byThread(thNum)
     thread = threads.get_byId(thNum)
     return render_template("thread.html", replies=mList, thread=thread, navbars=navbars())
 
+#Posting a new thread.
 @app.route("/threads/<thId>/post_reply", methods=["get", "post"])
 def post_reply(thId):
     if request.method == "GET":
@@ -94,6 +118,7 @@ def post_reply(thId):
         replies.add_new(content, thId, uId)
         return redirect(f"/thread/{thId}")
 
+#The page that shows all users.
 @app.route("/users")
 def user_list():
     userlist = users.getAllNames()
@@ -115,6 +140,7 @@ def one_user(username):
     return render_template("user.html", user=user, privateMessages=pm, my_id=my_id, my_name=my_name,
                             navbars=navbars())
 
+#With this a user can add a bio to their own account.
 @app.route("/users/addBio", methods=["get", "post"])
 def addBio():
     bio = request.form["bio"]
